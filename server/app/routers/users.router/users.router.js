@@ -11,7 +11,7 @@ const okStatusCode = getStatusCode('ok');
 
 const attachTo = (app, data) => {
   const controller = usersController.init(data);
-  const routerPrefix = '/api/users';
+  const routerPrefix = '/api/user';
 
   usersRouter.get('/', async (req, res) => {
     const { username } = req.query;
@@ -28,13 +28,13 @@ const attachTo = (app, data) => {
       );
   });
 
-  usersRouter.post('/register', async (req, res) => {
+  usersRouter.post('/create', async (req, res) => {
     const user = req.body;
-    controller
-      .createNewUser(user)
+
+    controller.createNewUser(user)
       .subscribe(
         (createdUser) => { res.status(createdStatusCode).json(createdUser); },
-        ({ statusCode = badRequestStatusCode, errorMessage = BAD_REQUEST_ERROR_MESSAGE }) => {
+        ({ statusCode, errorMessage }) => {
           res.status(statusCode).json({ errorMessage });
         },
       );

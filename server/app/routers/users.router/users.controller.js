@@ -1,31 +1,20 @@
 const { of } = require('rxjs/observable/of');
 const { from } = require('rxjs/observable/from');
 const { fromPromise } = require('rxjs/observable/fromPromise');
-const { tap, map, flatMap, take, skip, reduce, startWith } = require('rxjs/operators');
-const { validateUserBm } = require('./users.helpers');
+const { tap, map, flatMap, take, skip, reduce, startWith, catchError, throwException } = require('rxjs/operators');
 
 const {
-  createAuthResponse,
   createUserEntity,
   userToViewModel,
-  hashPassword,
 } = require('./users.helpers');
 
-const {
-  PROPERTY_ALREADY_IN_USE,
-  USERNAME_NOT_FOUND,
-  USERID_NOT_FOUND,
-  INCORRECT_PASSWORD,
-  DEFAULT_SALT_LENGTH,
-} = require('./users.constants');
+const { PROPERTY_ALREADY_IN_USE } = require('./users.constants');
 
 const { getStatusCode } = require('../../../utils');
-const { validateUser } = require('./users.validation');
 
 const conflictStatusCode = getStatusCode('conflict');
-const unauthorizedStatusCode = getStatusCode('unauthorized');
 
-const checkForUniqueFields = ['username', 'email'];
+const checkForUniqueFields = ['email'];
 
 const init = (data) => {
   const usersController = Object.create(null);
@@ -53,14 +42,15 @@ const init = (data) => {
 
   usersController.createNewUser = user => (of(user)
     .pipe(
-      tap(validateUserBm(validateUser)),
       flatMap(userObj => from(checkForUniqueFields)
         .pipe(
+          tap(uniqueFieldName => console.log(userObj[uniqueFieldName])),
           flatMap(uniqueFieldName => fromPromise(data.users.exists({
             property: uniqueFieldName,
             value: userObj[uniqueFieldName],
           }))
             .pipe(tap((exists) => {
+              console.log('exists: ', exists);
               if (exists) {
                 throw {
                   errorMessage: PROPERTY_ALREADY_IN_USE({
@@ -76,6 +66,11 @@ const init = (data) => {
       map(createUserEntity),
       flatMap(userEntity => data.users.create(userEntity)),
       map(userToViewModel),
+      catchError((error) => {
+        console.log('HERE:');
+        console.log(console.error(error));
+        throw ({ statusCode: 400, errorMessage: error });
+      }),
     )
   );
 
