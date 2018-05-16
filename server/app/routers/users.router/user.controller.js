@@ -11,6 +11,7 @@ const { getStatusCode } = require('../../../utils');
 
 const conflictStatusCode = getStatusCode('conflict');
 const badRequestStatusCode = getStatusCode('badRequest');
+const notFoundStatusCode = getStatusCode('notFound');
 
 const checkForUniqueFields = ['email'];
 
@@ -18,6 +19,15 @@ const init = (data) => {
   const userController = Object.create(null);
 
   userController.getAllUsers = () => data.user.getAll();
+
+  userController.getUserById = async (userId) => {
+    try {
+      const foundUser = await data.user.getByObjectId(userId);
+      return Promise.resolve(foundUser);
+    } catch (exception) {
+      return Promise.reject({ statusCode: notFoundStatusCode, errorMessage: 'No such user' });
+    }
+  };
 
   userController.createNewUser = user => (of(user)
     .pipe(

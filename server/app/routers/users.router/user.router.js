@@ -18,7 +18,18 @@ const attachTo = (app, data) => {
       const users = await controller.getAllUsers();
       res.status(okStatusCode).json(users);
     } catch ({ statusCode = badRequestStatusCode, errorMessage }) {
-      res.status(statusCode).json(errorMessage);
+      res.status(statusCode).json({ errorMessage });
+    }
+  });
+
+  usersRouter.get('/:userId', async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+      const user = await controller.getUserById(userId);
+      res.status(okStatusCode).json(user);
+    } catch ({ statusCode = badRequestStatusCode, errorMessage }) {
+      res.status(statusCode).json({ errorMessage });
     }
   });
 
