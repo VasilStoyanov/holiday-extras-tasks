@@ -40,7 +40,7 @@ const init = async (db) => {
     return Promise.reject(exception);
   }
 
-  const users = pipe(
+  const user = pipe(
     CRUD(db)(USERS_COLLECTION_NAME)(userModelValidator),
     aggregation(db)(USERS_COLLECTION_NAME),
     fetchUserData,
@@ -48,7 +48,7 @@ const init = async (db) => {
     exists,
   )(Object.create(null));
 
-  return Object.freeze({ users });
+  return Object.freeze({ user });
 };
 
 module.exports = { init };

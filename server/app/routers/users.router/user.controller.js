@@ -17,31 +17,13 @@ const checkForUniqueFields = ['email'];
 const init = (data) => {
   const userController = Object.create(null);
 
-  userController.getUsers = ({ username, usersToSkipCount = 0, usersToTakeCount = 1 }) => (
-    fromPromise(data.users.aggregationPipeline({
-      $match: {
-        username: {
-          $regex: `(.*${username}.*)`,
-          $options: 'i',
-        },
-      },
-    })
-      .toArray())
-      .pipe(
-        flatMap(dbResult => from(dbResult)),
-        skip(usersToSkipCount),
-        take(usersToTakeCount),
-        map(userToViewModel),
-        startWith([]),
-        reduce((acc, curr) => { acc.push(curr); return acc; }),
-      )
-  );
+  userController.getAllUsers = () => data.user.getAll();
 
   userController.createNewUser = user => (of(user)
     .pipe(
       flatMap(userObj => from(checkForUniqueFields)
         .pipe(
-          flatMap(uniqueFieldName => fromPromise(data.users.exists({
+          flatMap(uniqueFieldName => fromPromise(data.user.exists({
             fieldName: uniqueFieldName,
             value: userObj[uniqueFieldName],
           }))
@@ -60,7 +42,7 @@ const init = (data) => {
           reduce(() => userObj),
         )),
       map(toUserEntity),
-      flatMap(userEntity => data.users.create(userEntity)),
+      flatMap(userEntity => data.user.create(userEntity)),
       map(userToViewModel),
       catchError(({ statusCode = badRequestStatusCode, errorMessage }) => Promise.reject({ statusCode, errorMessage })),
     )

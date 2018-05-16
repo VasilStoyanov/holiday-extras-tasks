@@ -10,7 +10,7 @@ const readable = db => collection => obj => ({
 
       return dbResult;
     } catch (dbExeption) {
-      return Promise.reject(dbExeption);
+      return Promise.reject({ errorMessage: dbExeption });
     }
   },
 

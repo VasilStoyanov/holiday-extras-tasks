@@ -14,29 +14,21 @@ const attachTo = (app, data) => {
   const routerPrefix = '/api/user';
 
   usersRouter.get('/', async (req, res) => {
-    const { username } = req.query;
-    const usersToSkipCount = +req.query.from;
-    const usersToTakeCount = +req.query.to;
-
-    controller.getUsers({ username, usersToSkipCount, usersToTakeCount })
-      .subscribe(
-        (foundUsers) => { res.status(okStatusCode).json(foundUsers); },
-        (error) => {
-          console.error(error);
-          res.status(badRequestStatusCode).json(BAD_REQUEST_ERROR_MESSAGE);
-        },
-      );
+    try {
+      const users = await controller.getAllUsers();
+      res.status(okStatusCode).json(users);
+    } catch ({ statusCode = badRequestStatusCode, errorMessage }) {
+      res.status(statusCode).json(errorMessage);
+    }
   });
 
-  usersRouter.post('/create', async (req, res) => {
+  usersRouter.post('/create', (req, res) => {
     const user = req.body;
 
     controller.createNewUser(user)
       .subscribe(
         (createdUser) => { res.status(createdStatusCode).json(createdUser); },
-        ({ statusCode, errorMessage }) => {
-          res.status(statusCode).json({ errorMessage });
-        },
+        ({ statusCode, errorMessage }) => { res.status(statusCode).json({ errorMessage }); },
       );
   });
 
