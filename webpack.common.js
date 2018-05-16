@@ -15,7 +15,7 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'react-hot-loader/patch',
-    './client/src/index.jsx',
+    './client/index.js',
   ],
   output: {
     filename: 'app.js',
@@ -43,7 +43,7 @@ module.exports = {
   },
   plugins: [
     new HtmlPlugin({
-      template: './client/public/index.html',
+      template: './client/index.html',
     }),
   ],
 };

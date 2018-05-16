@@ -1,7 +1,6 @@
 const userController = require('./user.controller');
 const { getStatusCode } = require('./../../../utils');
 const { Router } = require('express');
-const { BAD_REQUEST_ERROR_MESSAGE } = require('./user.constants');
 
 const usersRouter = new Router();
 
@@ -43,31 +42,6 @@ const attachTo = (app, data) => {
       );
   });
 
-  usersRouter.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-    controller
-      .loginExistingUser({ username, password })
-      .subscribe(
-        (createdUser) => { res.status(createdStatusCode).json(createdUser); },
-        ({ statusCode = badRequestStatusCode, errorMessage = BAD_REQUEST_ERROR_MESSAGE }) => {
-          res.status(statusCode).json({ errorMessage });
-        },
-      );
-  });
-
-  usersRouter.put('/changepassword', async (req, res) => {
-    const userId = req.user.id;
-    const { oldPassword, newPassword } = req.body;
-
-    controller
-      .changeExistingUsersPassword({ userId, oldPassword, newPassword })
-      .subscribe(
-        () => { res.sendStatus(okStatusCode); },
-        ({ statusCode = badRequestStatusCode, errorMessage = BAD_REQUEST_ERROR_MESSAGE }) => {
-          res.status(statusCode).json({ errorMessage });
-        },
-      );
-  });
 
   app.use(routerPrefix, usersRouter);
 };

@@ -1,19 +1,16 @@
 const { of } = require('rxjs/observable/of');
 const { from } = require('rxjs/observable/from');
 const { fromPromise } = require('rxjs/observable/fromPromise');
-const { tap, map, flatMap, take, skip, reduce, startWith, catchError } = require('rxjs/operators');
-
+const { tap, map, flatMap, reduce, startWith, catchError } = require('rxjs/operators');
 const { userToViewModel, toUserEntity } = require('./user.helpers');
-
+const { userUniqueFields } = require('./../../../models/user.model/user.model');
 const { PROPERTY_ALREADY_IN_USE } = require('./user.constants');
-
 const { getStatusCode } = require('../../../utils');
 
 const conflictStatusCode = getStatusCode('conflict');
 const badRequestStatusCode = getStatusCode('badRequest');
 const notFoundStatusCode = getStatusCode('notFound');
 
-const checkForUniqueFields = ['email'];
 
 const init = (data) => {
   const userController = Object.create(null);
@@ -31,7 +28,7 @@ const init = (data) => {
 
   userController.createNewUser = user => (of(user)
     .pipe(
-      flatMap(userObj => from(checkForUniqueFields)
+      flatMap(userObj => from(userUniqueFields)
         .pipe(
           flatMap(uniqueFieldName => fromPromise(data.user.exists({
             fieldName: uniqueFieldName,

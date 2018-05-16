@@ -1,10 +1,19 @@
 {
   "name": "holiday-extras-tasks",
   "version": "1.0.0",
+  "nodemonConfig": {
+    "ignore": [
+      "client/*"
+    ]
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"set NODE_ENV=production & webpack --config webpack.workers.js & webpack --config webpack.prod.js\" \"node ./server/cluster.js\" --kill-others-on-fail ",
+    "dev": "concurrently \"set NODE_ENV=development & webpack --config webpack.watcher.js\" \"webpack-dev-server --open --config webpack.dev.js\" \"nodemon server/server.js\" --kill-others-on-fail ",
+    "debug": "set NODE_ENV=development && node --inspect-brk ./server/server.js",
+    "build": "set NODE_ENV=production & webpack --config webpack.workers.js & webpack --config webpack.prod.js",
+    "test": "gulp"
   },
   "repository": {
     "type": "git",

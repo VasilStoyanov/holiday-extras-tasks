@@ -2,7 +2,7 @@ const path = require('path');
 
 const PATH_TO_INDEX_HTML = path.join(
   __dirname,
-  './../../../../client/dist/index.html',
+  './../../../client/dist/index.html',
 );
 
 const attachTo = (app) => {

@@ -26,7 +26,7 @@ const toObject = (paths) => {
   return ret;
 };
 
-const workerPaths = glob.sync('./client/src/workers/*.js');
+const workerPaths = glob.sync('./client/workers/*.js');
 const entry = toObject(workerPaths);
 
 logMessage(WEB_WORKERS_PROCESS_STARTED_MESSAGE);
