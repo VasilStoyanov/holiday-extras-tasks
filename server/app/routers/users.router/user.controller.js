@@ -1,25 +1,23 @@
 const { of } = require('rxjs/observable/of');
 const { from } = require('rxjs/observable/from');
 const { fromPromise } = require('rxjs/observable/fromPromise');
-const { tap, map, flatMap, take, skip, reduce, startWith, catchError, throwException } = require('rxjs/operators');
+const { tap, map, flatMap, take, skip, reduce, startWith, catchError } = require('rxjs/operators');
 
-const {
-  createUserEntity,
-  userToViewModel,
-} = require('./users.helpers');
+const { userToViewModel, toUserEntity } = require('./user.helpers');
 
-const { PROPERTY_ALREADY_IN_USE } = require('./users.constants');
+const { PROPERTY_ALREADY_IN_USE } = require('./user.constants');
 
 const { getStatusCode } = require('../../../utils');
 
 const conflictStatusCode = getStatusCode('conflict');
+const badRequestStatusCode = getStatusCode('badRequest');
 
 const checkForUniqueFields = ['email'];
 
 const init = (data) => {
-  const usersController = Object.create(null);
+  const userController = Object.create(null);
 
-  usersController.getUsers = ({ username, usersToSkipCount = 0, usersToTakeCount = 1 }) => (
+  userController.getUsers = ({ username, usersToSkipCount = 0, usersToTakeCount = 1 }) => (
     fromPromise(data.users.aggregationPipeline({
       $match: {
         username: {
@@ -39,18 +37,15 @@ const init = (data) => {
       )
   );
 
-
-  usersController.createNewUser = user => (of(user)
+  userController.createNewUser = user => (of(user)
     .pipe(
       flatMap(userObj => from(checkForUniqueFields)
         .pipe(
-          tap(uniqueFieldName => console.log(userObj[uniqueFieldName])),
           flatMap(uniqueFieldName => fromPromise(data.users.exists({
-            property: uniqueFieldName,
+            fieldName: uniqueFieldName,
             value: userObj[uniqueFieldName],
           }))
             .pipe(tap((exists) => {
-              console.log('exists: ', exists);
               if (exists) {
                 throw {
                   errorMessage: PROPERTY_ALREADY_IN_USE({
@@ -61,20 +56,17 @@ const init = (data) => {
                 };
               }
             }))),
+          startWith({}),
           reduce(() => userObj),
         )),
-      map(createUserEntity),
+      map(toUserEntity),
       flatMap(userEntity => data.users.create(userEntity)),
       map(userToViewModel),
-      catchError((error) => {
-        console.log('HERE:');
-        console.log(console.error(error));
-        throw ({ statusCode: 400, errorMessage: error });
-      }),
+      catchError(({ statusCode = badRequestStatusCode, errorMessage }) => Promise.reject({ statusCode, errorMessage })),
     )
   );
 
-  return Object.freeze(usersController);
+  return Object.freeze(userController);
 };
 
 module.exports = { init };

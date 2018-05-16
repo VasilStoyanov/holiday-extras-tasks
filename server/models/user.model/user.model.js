@@ -32,7 +32,7 @@ const userModelValidationRules = {
     type: 'string',
     required: true,
   },
-  created: {
+  createdOn: {
     type: 'number',
     required: true,
   },

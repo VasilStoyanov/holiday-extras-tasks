@@ -1,7 +1,7 @@
-const usersController = require('./users.controller');
+const userController = require('./user.controller');
 const { getStatusCode } = require('./../../../utils');
 const { Router } = require('express');
-const { BAD_REQUEST_ERROR_MESSAGE } = require('./users.constants');
+const { BAD_REQUEST_ERROR_MESSAGE } = require('./user.constants');
 
 const usersRouter = new Router();
 
@@ -10,7 +10,7 @@ const badRequestStatusCode = getStatusCode('badRequest');
 const okStatusCode = getStatusCode('ok');
 
 const attachTo = (app, data) => {
-  const controller = usersController.init(data);
+  const controller = userController.init(data);
   const routerPrefix = '/api/user';
 
   usersRouter.get('/', async (req, res) => {

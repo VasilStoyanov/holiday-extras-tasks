@@ -3,7 +3,9 @@ const creatable = db => collection => validator => obj => ({
   create: async (data) => {
     const validationResult = await validator.validateModel(data);
     if (!validationResult || !validationResult.isValid) {
-      return Promise.reject(validationResult.message);
+      return Promise.reject({
+        errorMessage: validationResult.message,
+      });
     }
 
     return new Promise((resolve, reject) => {

@@ -1,11 +1,7 @@
 const userModel = Object.create(null);
 
 userModel.constants = {
-  USERS_COLLECTION_NAME: 'users',
-  USERS_USERNAME_COLUMN_NAME: 'username',
-
-  SALT_MAX_LENGTH: 40,
-  SALT_MIN_LENGTH: 10,
+  USERS_COLLECTION_NAME: 'user',
 
   USER_EMAIL_MAX_LENGTH: 40,
   USER_EMAIL_MIN_LENGTH: 5,
