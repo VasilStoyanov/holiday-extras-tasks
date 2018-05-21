@@ -52,7 +52,7 @@ Request body:
 }
 ````
   - This can be sent using the User's api view coming with the application (localhost:3000/users).
-  - User validations can be found in ** server\models\user.model\user.model.js **
-  - Server provides an API for create/read operations over the users, however there are working update/delete methods existing in the ** data layer ** as well
-  See: ** server\data\user.data\users.data.js **
+  - User validations can be found in **server\models\user.model\user.model.js**
+  - Server provides an API for create/read operations over the users, however there are working update/delete methods existing in the **data layer** as well
+  See: **server\data\user.data\users.data.js**
   - Upon creation of new user, the server check's for an already existing email - if such is found, the user is not created.
