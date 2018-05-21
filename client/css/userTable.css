@@ -4,7 +4,7 @@
   margin-top: 10px;
 }
 
-#user-table-container .reload-btn{
+#user-table-container .reload-btn {
   left: 70%;
 }
 
@@ -29,12 +29,12 @@
 
 @media only screen and (max-width: 600px) {
   #user-table-container table {
-    width: 100%;
-    left: 0%;
+    width: 95%;
+    left: 2.5%;
   }
 
   #register-new-user-container {
-    width: 100%;
-    left: 0%;
+    width: 95%;
+    left: 2.5%;
   }
 }
