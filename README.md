@@ -23,7 +23,7 @@ It's recommended (but optional) to install dev dependencies as well:
 ```sh
   npm run dev
 ```
-  - This will setup a Webpack dev server which will listen on port 3001 and will hot reload the application upon ** client ** changes in jsx, js, css (etc...) files. Nodemon will restart the ** server ** upon back-end changes.
+  - This will setup a Webpack dev server which will listen on port 3001 and will hot reload the application upon **client** changes in jsx, js, css (etc...) files. Nodemon will restart the **server** upon back-end changes.
   - The main application will run on port 3000
   - The webpack dev server communicates to the real server via proxy
 
