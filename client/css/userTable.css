@@ -1,0 +1,40 @@
+#user-table-container table {
+  width: 50%;
+  left: 25%;
+  margin-top: 10px;
+}
+
+#user-table-container .reload-btn{
+  left: 70%;
+}
+
+#register-new-user-container {
+  margin-top: 25px;
+  left: 25%;
+  width: 50%;
+}
+
+#register-new-user-container .register-new-user-form {
+  margin-left: 15px;
+  width: 95%;
+}
+
+#register-new-user-container .submit-area {
+    margin-top: 50px;
+}
+
+#register-new-user-container .submit-area a {
+  float: right;
+}
+
+@media only screen and (max-width: 600px) {
+  #user-table-container table {
+    width: 100%;
+    left: 0%;
+  }
+
+  #register-new-user-container {
+    width: 100%;
+    left: 0%;
+  }
+}

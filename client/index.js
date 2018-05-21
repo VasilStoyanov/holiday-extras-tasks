@@ -4,7 +4,7 @@ import React from 'react';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
-import App from './containers/app';
+import App from './components/app';
 import store from './store';
 
 import './../node_modules/material-design-lite/material.min.css';

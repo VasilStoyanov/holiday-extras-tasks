@@ -1,11 +1,11 @@
 export default function userReducer(state = {}, action) {
   switch (action.type) {
-    case 'FETCH_ALL_USERS':
-      console.log('action: ', action);
-      console.log('magic happended!');
+    case 'FETCH_ALL_USERS_COMPLETED':
+      return { ...state, users: action.payload };
+    case 'CREATE_NEW_USER_SUCCESS':
+      state.users.push(action.payload);
       return { ...state };
     default:
-      console.log('in default');
       return { ...state };
   }
 }

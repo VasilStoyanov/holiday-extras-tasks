@@ -1,7 +1,7 @@
 import { createEpicMiddleware, combineEpics } from 'redux-observable';
-import { userEpic } from './user/userEpic';
+import { fetchUsersEpic, createNewUserEpic } from './user/userEpic';
 
-export const rootEpic = combineEpics(userEpic);
+export const rootEpic = combineEpics(fetchUsersEpic, createNewUserEpic);
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
 export default epicMiddleware;

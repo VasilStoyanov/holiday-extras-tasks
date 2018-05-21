@@ -3,6 +3,7 @@ const userToViewModel = user => ({
   forename: user.forename,
   surname: user.surname,
   createdOn: user.createdOn,
+  email: user.email,
 });
 
 const toUserEntity = (userBm) => {

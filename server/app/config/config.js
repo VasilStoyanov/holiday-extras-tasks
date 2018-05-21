@@ -6,6 +6,8 @@ const express = require('express');
 const Ddos = require('ddos');
 
 const ddos = new Ddos();
+const distPath = path.join(__dirname, './../../../client/dist/');
+const distWorkersPath = path.join(__dirname, './../../../client/dist_workers/');
 
 const applyTo = (app) => {
   app.use(helmet());
@@ -14,8 +16,12 @@ const applyTo = (app) => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(ddos.express);
 
-  const distPath = path.join(__dirname, './../../../client/dist/');
-  const distWorkersPath = path.join(__dirname, './../../../client/dist_workers/');
+  // Allow CORS
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
 
   app.use('/', express.static(distPath));
   app.use('/utils/webworkers/', express.static(distWorkersPath));
