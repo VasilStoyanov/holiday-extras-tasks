@@ -86,11 +86,11 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.9",
+    "eslint": "^4.9.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
-    "eslint": "^4.9.0",
     "nodemon": "^1.15.1",
     "svg-inline-loader": "^0.8.0",
     "url-loader": "^0.6.2"

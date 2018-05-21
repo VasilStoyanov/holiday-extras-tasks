@@ -10,6 +10,7 @@ class FlickrData extends Component {
   render() {
     return (
       <div>
+        <img src="https://farm1.staticflickr.com/828/40454311670_860a470fd6_m.jpg" />
         <button onClick={() => this.props.fetchFlickrData()}>Get</button>
       </div>
     );

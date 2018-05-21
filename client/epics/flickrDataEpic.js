@@ -4,20 +4,29 @@ import * as axios from 'axios';
 import jQuery from 'jquery';
 
 const DEBOUNCE_TIME_IN_MS = 200;
+const flickrApiPoint = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
 
-jQuery.get('https://api.flickr.com/services/feeds/photos_public.gne?tags=kitten&format=json&nojsoncallback=true')
-  .then((response) => {
-    console.log('here');
-  })
-  .catch((err) => {
-    console.log('there');
+const getFlickerData = () => new Promise((resolve, reject) => {
+  jQuery.ajax({
+    url: flickrApiPoint,
+    dataType: 'jsonp',
+    data: { format: "json" },
+    success: (data) => {
+      console.log('here');
+      console.log(data);
+      resolve(data);
+    },
+    error: (error) => {
+      reject(error);
+    }
   });
+});
+
 
 export const fetchFlickrData = action$ =>
   action$.ofType('FETCH_FLICKR_DATA')
     .pipe(
       debounceTime(DEBOUNCE_TIME_IN_MS),
-      switchMap(() => fromPromise(axios.get('https://api.flickr.com/services/feeds/photos_public.gne?format=json'))),
-      pluck('data'),
+      switchMap(() => fromPromise(getFlickerData())),
       map(flickrData => ({ type: 'FETCH_FLICKR_DATA_COMPLETED', payload: flickrData })),
     );
