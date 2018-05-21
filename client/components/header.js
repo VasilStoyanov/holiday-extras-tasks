@@ -7,7 +7,7 @@ const Header = () => (
       <span className="mdl-layout-title">Holiday extras task</span>
       <div className="mdl-layout-spacer" />
       <nav className="mdl-navigation mdl-layout--large-screen-only">
-        <Link className="mdl-navigation__link" to="/">Flicker API</Link>
+        <Link className="mdl-navigation__link" to="/">Flickr API</Link>
         <Link className="mdl-navigation__link" to="/users">Users API</Link>
       </nav>
     </div>
