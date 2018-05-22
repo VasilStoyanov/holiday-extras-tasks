@@ -63,7 +63,7 @@ Request body:
 
 # Technologies used:
 * Back-end:
- - NodeJS, ExpressJS, MongoDB, RxJS
+  - NodeJS, ExpressJS, MongoDB, RxJS
 * Front-end:
   -  React, Redux, Redux-Observable
 * Tools:
