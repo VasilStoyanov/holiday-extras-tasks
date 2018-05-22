@@ -56,3 +56,15 @@ Request body:
   - Server provides an API for create/read operations over the users, however there are working update/delete methods existing in the **data layer** as well
   See: **server\data\user.data\users.data.js**
   - Upon creation of new user, the server check's for an already existing email - if such is found, the user is not created.
+
+### [Task 'Flickr Photo Stream'](https://github.com/holidayextras/culture/blob/master/recruitment/developer-flickr-task.md)
+
+- Available on localhost:3000
+
+### Technologies used:
+* Back-end:
+ - NodeJS, ExpressJS, MongoDB, RxJS
+* Front-end:
+  -  React, Redux, Redux-Observable
+* Tools:
+  * Webpack, npm scripts
