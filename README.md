@@ -1,6 +1,7 @@
 # Preview
-![preview_img_2](https://ibb.co/c98FFo")
-![preview_img_2](https://ibb.co/h32Wo8")
+![preview_img_2](http://i66.tinypic.com/2prcuc3.png)
+
+![preview_img_2](http://i65.tinypic.com/s0vg1s.png)
 
 # Running the application
 
