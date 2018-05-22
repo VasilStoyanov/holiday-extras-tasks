@@ -21,6 +21,7 @@ export const createNewUserEpic = action$ =>
       action.payload,
     ))
       .pipe(
+        pluck('data'),
         map(user => ({ type: 'CREATE_NEW_USER_SUCCESS', payload: user })),
         catchError(error => of({ type: 'CREATE_NEW_USER_FAIL', payload: error })),
       )));
