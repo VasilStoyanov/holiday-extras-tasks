@@ -61,7 +61,7 @@ Request body:
 
 - Available on localhost:3000
 
-### Technologies used:
+# Technologies used:
 * Back-end:
  - NodeJS, ExpressJS, MongoDB, RxJS
 * Front-end:
