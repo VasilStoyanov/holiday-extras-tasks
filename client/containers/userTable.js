@@ -31,10 +31,6 @@ class UserTable extends Component {
     this.state.newUser.email = target.value;
   }
 
-  handleClick() {
-    console.log(this.state);
-  }
-
   render() {
     window.componentHandler.upgradeDom(); // Workaround for a bug coming from Material Design Lite
     const users = this.props.users.users || [];

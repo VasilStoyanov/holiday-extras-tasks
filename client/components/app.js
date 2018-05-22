@@ -11,6 +11,7 @@ const App = () => (
       <Header />
       <Drawer />
       <Content />
+      <footer>Created by Vasil Stoayanov</footer>
     </div>
   </Router>
 );
