@@ -1,4 +1,6 @@
-
+# Preview
+![preview_img_2](https://ibb.co/c98FFo")
+![preview_img_2](https://ibb.co/h32Wo8")
 
 # Running the application
 
