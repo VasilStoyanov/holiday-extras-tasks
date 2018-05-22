@@ -1,4 +1,4 @@
-import { filter, map, pluck, switchMap, debounceTime, catchError, tap } from 'rxjs/operators';
+import { map, pluck, switchMap, debounceTime, catchError } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { of } from 'rxjs/observable/of';
 import * as axios from 'axios';
@@ -16,15 +16,11 @@ export const fetchUsersEpic = action$ =>
 
 export const createNewUserEpic = action$ =>
   action$.ofType('CREATE_NEW_USER')
-    .pipe(
-      switchMap(action => fromPromise(axios.post(
-        'http://localhost:3000/api/user/create',
-        action.payload,
-      ))
-        .pipe(
-          catchError(() => of(Object.create(null))),
-          filter(obj => obj.data),
-        )),
-      pluck('data'),
-      map(user => ({ type: 'CREATE_NEW_USER_SUCCESS', payload: user })),
-    );
+    .pipe(switchMap(action => fromPromise(axios.post(
+      'http://localhost:3000/api/user/create',
+      action.payload,
+    ))
+      .pipe(
+        map(user => ({ type: 'CREATE_NEW_USER_SUCCESS', payload: user })),
+        catchError(error => of({ type: 'CREATE_NEW_USER_FAIL', payload: error })),
+      )));

@@ -4,15 +4,13 @@ import { fetchFlickrData } from './../actions/flickDataActions';
 
 class FlickrData extends Component {
   componentDidMount() {
-
+    this.props.fetchFlickrData();
   }
 
   render() {
+    console.log(this.props);
     return (
-      <div>
-        <img src="https://farm1.staticflickr.com/828/40454311670_860a470fd6_m.jpg" />
-        <button onClick={() => this.props.fetchFlickrData()}>Get</button>
-      </div>
+      <div>ASDAsssS</div>
     );
   }
 }
@@ -22,7 +20,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchFlickrData: () => console.log('here') || dispatch(fetchFlickrData()),
+  fetchFlickrData: () => dispatch(fetchFlickrData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FlickrData);

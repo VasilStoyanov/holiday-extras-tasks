@@ -5,6 +5,8 @@ export default function userReducer(state = {}, action) {
     case 'CREATE_NEW_USER_SUCCESS':
       state.users.push(action.payload);
       return { ...state };
+    case 'CREATE_NEW_USER_FAIL':
+      return { ...state };
     default:
       return { ...state };
   }
